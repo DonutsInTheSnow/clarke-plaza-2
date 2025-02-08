@@ -1,0 +1,81 @@
+.heroStyle {
+    position: relative;
+    background-image: url("../../assets/images/clarke-1.webp");
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 600px) {
+    .heroStyle {
+        position: relative;
+        background-image: url("../../assets/images/clarke-mobile.webp");
+        background-size: cover;
+        background-position: center;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.overlayStyle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ff0000;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.contentStyle {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.contentStyle h2 {
+    font-size: 2.2rem;
+    padding: 0;
+    margin: 0;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 0 3px #000;
+}
+
+.contentStyle h3 { 
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    max-width: 600px; 
+    text-shadow: 0 0 2px #000;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 768px) {
+    .contentStyle h2 {
+        font-size: 1.6rem;
+        line-height: 2rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .contentStyle h3 {
+        font-size: 1.3rem;
+        /* margin: 2rem; */
+    }
+    .contentStyle {
+        margin: 1rem;
+    }
+}

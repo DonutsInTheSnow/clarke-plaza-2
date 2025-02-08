@@ -1,0 +1,24 @@
+#contact .MuiGrid2-root {
+    padding: 2rem 1rem 3rem 1rem;
+    box-shadow: 0 0 5px #999;
+    border-radius: 5px;
+}
+
+#contact .MuiButton-contained {
+    background-color: #ff4444;
+}
+
+#contact .MuiButton-contained:hover {
+    background-color: #ff0000;
+}
+
+@media (max-width: 600px) {
+    /* Wow! Look at the specificty all for making the contact form responsive */
+    div.MuiGrid2-root.MuiGrid2-direction-xs-row.MuiGrid2-grid-sm-8.MuiGrid2-grid-md-6.contact-form.css-1naejoc-MuiGrid2-root {
+        width: 100%;
+    }
+    /* copyright sizing */
+    div.MuiGrid2-root.MuiGrid2-direction-xs-row.MuiGrid2-grid-xs-6.css-ticvdu-MuiGrid2-root {
+        width: 95%;
+    }
+}

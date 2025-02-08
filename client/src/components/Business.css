@@ -1,0 +1,55 @@
+.business-section {
+    background-color: #feefee;
+    color: #000000;
+    padding: 40px 20px;
+}
+
+.business-section .MuiGrid2-root {
+    box-shadow: 0 0 5px #ddd;
+    border-radius: 5px;
+}
+
+.business-section h2 {
+    text-shadow: -2px 0 4px #999;
+}
+
+.business-section p {
+    font-size: 1.2em; 
+    font-weight: 700;
+    line-height: 1.6;
+    padding: .5rem 1rem;
+}
+
+.business-section .css-rizt0-MuiTypography-root {
+    font-weight: 600;
+}
+
+@media (max-width: 1200px) {
+    .business-section h2 {
+        font-size: 3rem;
+    }
+    .business-section p {
+        font-weight: 500;
+    }
+}
+
+@media (max-width: 1000px) {
+    .business-section h2 {
+        font-size: 2.6em;
+    }
+}
+
+@media (max-width: 500px) {
+    .business-section {
+        padding: 10px 5px;
+    }
+    .business-section h2 {
+        font-size: 2.5em;
+        padding: 1em 0 .5em 0;
+        text-shadow: -3px 0 4px #000;
+    }
+    .business-section p {
+        padding: .25em;
+        font-weight: 700;
+    }
+}
