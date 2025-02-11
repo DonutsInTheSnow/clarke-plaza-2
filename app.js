@@ -1,10 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const { createClient } = require('@supabase/supabase-js');
-const supabaseUrl = 'https://oamydhslmxfpucpuqqac.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
-const mockUnits = require('./mockUnits.json');
 const cors = require('cors');
 
 const app = express();
