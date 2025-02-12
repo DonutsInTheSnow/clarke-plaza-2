@@ -12,7 +12,8 @@ const Checkout = () => {
     if (!stripe || !selectedUnit) return;
   
     try {
-      const response = await fetch('/checkout/create-subscription-session', {
+      const response = await fetch('https://clarke-plaza-2-backend.vercel.app/checkout/create-subscription-session', {
+      // const response = await fetch('/checkout/create-subscription-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
