@@ -1,8 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_SK);
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./database.sqlite');
+const { createClient } = require('@supabase/supabase-js');
+const supabaseUrl = 'https://oamydhslmxfpucpuqqac.supabase.co';
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+// const sqlite3 = require('sqlite3').verbose();
+// const db = new sqlite3.Database('./database.sqlite');
 
 // Fetch price details by priceId (unchanged)
 router.get('/get-price-details/:priceId', async (req, res) => {
@@ -24,26 +29,43 @@ router.get('/get-price-details/:priceId', async (req, res) => {
 // Fetch one-time price ID for a unit (modified for SQLite)
 router.get('/fetch-one-time-price-id/:unitId', async (req, res) => {
   const { unitId } = req.params;
-  db.get('SELECT priceId, unitNumber, size FROM units WHERE id = ?', [unitId], (err, row) => {
-    if (err) {
-      console.error('Error fetching unit:', err);
-      return res.status(500).send({ error: 'Failed to fetch unit details' });
-    }
-    if (!row) {
-      return res.status(404).send({ error: 'Unit not found' });
-    }
-    if (!row.priceId) {
-      return res.status(400).send({ error: `No price found for size: ${row.size}` });
-    }
-    res.json({
-      priceId: row.priceId,
-      unitNumber: row.unitNumber,
-      size: row.size
-    });
+  // db.get('SELECT priceId, unitNumber, size FROM units WHERE id = ?', [unitId], (err, row) => {
+  //   if (err) {
+  //     console.error('Error fetching unit:', err);
+  //     return res.status(500).send({ error: 'Failed to fetch unit details' });
+  //   }
+  //   if (!row) {
+  //     return res.status(404).send({ error: 'Unit not found' });
+  //   }
+  //   if (!row.priceId) {
+  //     return res.status(400).send({ error: `No price found for size: ${row.size}` });
+  //   }
+  //   res.json({
+  //     priceId: row.priceId,
+  //     unitNumber: row.unitNumber,
+  //     size: row.size
+  //   });
+  // });
+
+  const { data: unit, error } = await supabase.from('units').select('priceId, unitNumber, size').eq('id', unitId).single();
+  if (error) {
+    console.error('Error fetching unit:', error);
+    return res.status(500).send({ error: 'Failed to fetch unit details' });
+  }
+  if (!unit) {
+    return res.status(404).send({ error: 'Unit not found' });
+  }
+  if (!unit.priceId) {
+    return res.status(400).send({ error: `No price found for size: ${unit.size}` });
+  }
+  res.json({
+    priceId: unit.priceId,
+    unitNumber: unit.unitNumber,
+    size: unit.size
   });
+
 });
 
-// Create a Stripe Subscription session
 router.post('/create-subscription-session', async (req, res) => {
   console.log("Hi there from create-subscription-session POST request.");
   try {
@@ -51,13 +73,14 @@ router.post('/create-subscription-session', async (req, res) => {
     console.log(`Hi McDick, here is a priceID: ${priceId}`);
 
     // Fetch unit details
-    const unit = await new Promise((resolve, reject) => {
-      db.get('SELECT id, unitNumber, size, isAvailable FROM units WHERE id = ?', [unitId], (err, row) => {
-        if (err) return reject(err);
-        if (!row) return reject(new Error('Unit not found'));
-        resolve(row);
-      });
-    });
+    const { data: unit, error } = await supabase.from('units').select('id, unitNumber, size, isAvailable').eq('id', unitId).single();
+    if (error) {
+      console.error('Error fetching unit:', error);
+      return res.status(500).send({ error: 'Failed to fetch unit details' });
+    }
+    if (!unit) {
+      return res.status(404).send({ error: 'Unit not found' });
+    }
 
     // Create subscription session
     const session = await stripe.checkout.sessions.create({
@@ -68,8 +91,8 @@ router.post('/create-subscription-session', async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: 'http://localhost:5173/success',
-      cancel_url: 'http://localhost:5173/cancel',
+      success_url: 'https://clarke-plaza-2.vercel.app/success',
+      cancel_url: 'https://clarke-plaza-2.vercel.app/cancel',
       metadata: {
         unitId: unit.id,
         unitNumber: unit.unitNumber,
