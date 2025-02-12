@@ -14,14 +14,14 @@ const StorageUnits = () => {
   useEffect(() => {
     const fetchUnits = async () => {
       try {
-        // const response = await axios.get('https://clarke-plaza-storage-backend.vercel.app/units/available');
-        const response = await axios.get('http://localhost:3001/units/available');
+        const response = await axios.get('https://clarke-plaza-2-backend.vercel.app/units/available');
+        // const response = await axios.get('http://localhost:3001/units/available');
         const unitsWithPrices = await Promise.all(
           response.data.map(async (unit) => {
             if (unit.priceId) {
               try {
-                // const priceResponse = await axios.get(`https://clarke-plaza-storage-backend.vercel.app/checkout/get-price-details/${unit.priceId}`);
-                const priceResponse = await axios.get(`http://localhost:3001/checkout/get-price-details/${unit.priceId}`);
+                const priceResponse = await axios.get(`https://clarke-plaza-2-backend.vercel.app/checkout/get-price-details/${unit.priceId}`);
+                // const priceResponse = await axios.get(`http://localhost:3001/checkout/get-price-details/${unit.priceId}`);
                 return { ...unit, price: priceResponse.data.price };
               } catch (err) {
                 console.error(`Failed to fetch price for unit ${unit.unitNumber}:`, err);
@@ -58,7 +58,8 @@ const StorageUnits = () => {
 
   const rentUnit = async (unit) => {
     try {
-      const response = await axios.post('http://localhost:3001/checkout/create-subscription-session', {
+      const response = await axios.post('https://clarke-plaza-2-backend.vercel.app/checkout/create-subscription-session', {
+      // const response = await axios.post('http://localhost:3001/checkout/create-subscription-session', {
         // unitId: unit.id,
         unitId: unit.id, // Change id to _id if necessary
         priceId: unit.priceId, // Assuming priceId is the Stripe Price ID for the subscription
