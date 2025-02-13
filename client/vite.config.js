@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       // '/api': 'http://localhost:3001', 
-      '/api': 'https://clarke-storage-2-backend.vercel.app', 
+      '/api': 'https://clarke-plaza-2-backend.vercel.app', 
     },
   },
 })
