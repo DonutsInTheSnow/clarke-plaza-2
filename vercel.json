@@ -1,8 +1,15 @@
+// {
+//   "version": 2,
+//   "builds": [{ "src": "app.js", "use": "@vercel/node" }],
+//   "routes": [
+//     { "src": "/api/(.*)", "dest": "app.js" },
+//     { "src": "/(.*)", "dest": "/client/index.html" }
+//   ]
+// }
+
+
 {
   "version": 2,
   "builds": [{ "src": "app.js", "use": "@vercel/node" }],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "app.js" },
-    { "src": "/(.*)", "dest": "/client/index.html" }
-  ]
+  "routes": [{ "src": "/(.*)", "dest": "app.js" }]
 }
