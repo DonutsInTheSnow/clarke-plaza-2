@@ -38,7 +38,10 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // GET: Fetch available units with filtering by size if query is provided
 router.get('/available', async (req, res) => {
   const { size } = req.query; // Get size filter from query parameter
-  let query = supabase.from('units').select('*').eq('isAvailable', true);
+  let query = supabase
+  .from('units')
+  .select('*')
+  .eq('isAvailable', true);
 
   if (size) {
     // Supabase uses ilike for case-insensitive partial matching
