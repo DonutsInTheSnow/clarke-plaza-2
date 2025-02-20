@@ -29,7 +29,7 @@ router.post('/', express.raw({ type: 'application/json' }), async (req, res) => 
                 console.log('webhook ln29 here! Attempting to update unit with ID:', unitId);
                 const { error, data } = await supabase
                     .from('units')
-                    .update({ isAvailable: false, subscriptionId: session.subscription })
+                    .update({ isAvailable: false })
                     .eq('id', unitId);
 
                 if (error) {
